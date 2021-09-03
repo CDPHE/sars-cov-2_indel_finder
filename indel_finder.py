@@ -2,13 +2,14 @@
 
 
 # Description
-# This script takes either a directory of fasta files (one sequence per file) or one fasta file (with multiple sequences),
-# aligns each sequence to the reference genome,
-# removes insertions ensuring that all sequences are 29903 bp in length, 
-# and outputs an alignment.
+# This python script accomplishes the following:
+# - takes a set of sars-cov-2 sequences (either as a multi sequence fasta or a directory of single sequence fasta files) and aligns each to the reference genome (pairwise alignment)
+# - identifies all insertions and deletions within each sample sequence and generates an output table
+# - removes nucleotide insertions from sample sequences
+# - using the pair-wise alignments generates a MSA (multi sequence alignment) output alignment fasta
 
 # Example Usage:
-# indel_finder.py-- -i 'directory path or fasta file name' 
+#   indel_finder.py -i <multi_sequence.fasta> -o . --ref_path <path_to_ref_genome> --prefix <prefix> 
 
 
 
