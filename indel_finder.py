@@ -94,7 +94,7 @@ def create_multi_fasta(fasta_files_dir_path, out_fasta):
         
     os.chdir(fasta_files_dir_path)
              
-    for file in glob.glob('*.fasta'):
+    for file in glob.glob('*.fa'):
         record = SeqIO.read(file, 'fasta')
         with open(out_fasta, 'a') as outhandle:
              SeqIO.write(record, outhandle, 'fasta')
