@@ -50,6 +50,8 @@ This only needs to be performed the first time you run the script.
   - ``ref_path``: path to the reference genome
   -``--prefix``: (optional) prefix used to save outputs, if not specified will default to today's date
 
+  - note use complete paths!!
+
   3. Putting it all together:
   ``indel_finder.py -i <multi_sequence.fasta> -o . --ref_path <path_to_ref_genome> --prefix <prefix> ``
 
