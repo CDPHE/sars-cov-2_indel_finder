@@ -8,7 +8,7 @@
 # and outputs an alignment.
 
 # Example Usage:
-# indel_finder.py --input_type 'multi-seq or single-seq' --input 'directory path or fasta file name' 
+# indel_finder.py-- -i 'directory path or fasta file name' 
 
 
 
