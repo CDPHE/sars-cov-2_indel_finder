@@ -38,7 +38,7 @@ This only needs to be performed the first time you run the script.
 - Sample sequences either as:
   - a multi sequence fasta file
   - directory with single sequence fasta files
-- Reference genome
+- Reference genome saved as a fasta file
 
 ## Running the script
 1. Activate teh conda environment

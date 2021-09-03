@@ -95,8 +95,8 @@ def create_multi_fasta(fasta_files_dir_path, out_fasta):
     os.chdir(fasta_files_dir_path)
              
     for file in glob.glob('*.fasta'):
-        record = SeqIO.record(file, 'fasta')
-        with open(outfasta, 'a') as outhandle:
+        record = SeqIO.read(file, 'fasta')
+        with open(out_fasta, 'a') as outhandle:
              SeqIO.write(record, outhandle, 'fasta')
     
     return None
@@ -439,10 +439,10 @@ if __name__ == '__main__':
         print('')
         
         multifasta = os.path.join(wd, '%s_multifasta.fasta' % prefix)
-        create_multi_fasta(fasta_files_dir_path = otpions.input, 
+        create_multi_fasta(fasta_files_dir_path = options.input, 
                            out_fasta = multifasta)
         
-        print('multi sequence fasta saved to: %s' % out_fasta)
+        print('multi sequence fasta saved to: %s' % multifasta)
         
    
     # add reference genome to each fasta file in temp fasta directory

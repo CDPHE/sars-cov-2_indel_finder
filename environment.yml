@@ -10,3 +10,4 @@ dependencies:
   - google-cloud-storage=1.36.1
   - xlrd=2.0.1
   - openpyxl
+  - biopython=1.76
