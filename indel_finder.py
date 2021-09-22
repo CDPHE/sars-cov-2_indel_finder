@@ -130,9 +130,9 @@ def add_ref_genome(multifasta, ref_genome, fasta_temp_dir):
         with open(path, 'w') as handle:
             SeqIO.write(records, handle, 'fasta')
              
-    return None
+    return num_records
 
-def align_sequences(fasta_temp_dir, alignment_temp_dir):      
+def align_sequences(fasta_temp_dir, alignment_temp_dir, num_records):      
     os.chdir(fasta_temp_dir)
     print('')
     print('2- aligning each sample sequence to reference genome and saving to temp alignments directory')
@@ -140,7 +140,12 @@ def align_sequences(fasta_temp_dir, alignment_temp_dir):
     n=0
     for file in glob.glob('*.fasta'):
         n = n + 1
-#         print(n)
+        remainder = n%25
+        if remainder == 0:
+            print('  ....%d/%d complete' % (n, num_records))
+        elif n == num_records:
+            print('  ....%d/%d complete' % (n, num_records))
+            
         sample_seq_name = file.split('.fasta')[0]
 
         # create outpath file name for alignment
@@ -428,7 +433,7 @@ if __name__ == '__main__':
     
     
     #determine input type and create multifasta if neccessary:
-    if re.search('.fasta', options.input):
+    if re.search('.fa', options.input):
         input_type = 'single multi sequence fasta file'
         multifasta = options.input
         print('input type: %s' % input_type)
@@ -446,13 +451,14 @@ if __name__ == '__main__':
         
    
     # add reference genome to each fasta file in temp fasta directory
-    add_ref_genome(multifasta = multifasta, 
+    num_records = add_ref_genome(multifasta = multifasta, 
                   ref_genome =ref['ref_record'], 
                   fasta_temp_dir = temp_dirs['fasta_temp_dir'])    
     
     # do alignment adn save alignment to temp alignment directory
     align_sequences(fasta_temp_dir = temp_dirs['fasta_temp_dir'], 
-                    alignment_temp_dir = temp_dirs['alignment_temp_dir'])
+                    alignment_temp_dir = temp_dirs['alignment_temp_dir'], 
+                   num_records = num_records)
              
              
     # remove and record the insertions
@@ -484,6 +490,7 @@ if __name__ == '__main__':
     delete_temp_directory(directory_name = temp_dirs['fasta_temp_dir'])
 
     print('********************************')
+    print('DONE!')
     print('')
     
     
