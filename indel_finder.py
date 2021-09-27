@@ -210,14 +210,14 @@ def remove_insertions(alignment_temp_dir, ref_id, ref_seq ):
 
                             seq_list.append(alignment_name)
 
-                            start = i.start() - moving_length # account for previous insertions removed
-                            length = i.end() - i.start() 
+                            start = i.start()  - moving_length # account for previous insertions removed
+                            length = i.end() - i.start()  # gets you teh insertion length
 
                             start_list.append(start)
                             length_list.append(length)
 
                             # get bp around teh insertion from the true ref sequence
-                            insert_nucleotides = ref_seq[start: start+length] 
+                            insert_nucleotides = sample_seq_str[start: start+length] 
                             ref_seq_list.append('+%s' % insert_nucleotides)
 
                             # get the sequence around the insert
