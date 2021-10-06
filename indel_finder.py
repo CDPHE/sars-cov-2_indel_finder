@@ -110,6 +110,26 @@ def add_ref_genome(multifasta, ref_genome, fasta_temp_dir):
     num_records = len(list(SeqIO.parse(multifasta, "fasta")))
     print('1- adding reference genome to each sequence and saving to temp fasta files directory')
     print('  ....there are %d sequences' % num_records)
+    
+    # are any seqeunces duplicated in the multifasta?? If so, print warning because only one of the 
+    # duplicates will be proccessed becasue the files will be overwritten
+    
+    duplicated_records = []
+    all_records = []
+    for record in SeqIO.parse(multifasta, 'fasta'):
+        if record.id not in all_records:
+            all_records.append(record.id)
+        else:
+            duplicated_records.append(record.id)
+            
+            
+    print('  ....there are %d records with same record.id in the multifasta' % len(duplicated_records))
+    print('  ....any records with the same record.id will not get processed; the file will be overwritten')
+    if len(duplicated_records) > 0 :
+        print('  ....the records wtih the same record.id are:')
+        for record in duplicated_records:
+            print(  '  ........ %s' % record)
+    
     n = 0
              
     for record in SeqIO.parse(multifasta, 'fasta'):
@@ -216,11 +236,11 @@ def remove_insertions(alignment_temp_dir, ref_id, ref_seq ):
                             start_list.append(start)
                             length_list.append(length)
 
-                            # get bp around teh insertion from the true ref sequence
+                            # get bp around teh insertion from the sample sequence
                             insert_nucleotides = sample_seq_str[start: start+length] 
                             ref_seq_list.append('+%s' % insert_nucleotides)
 
-                            # get the sequence around the insert
+                            # get the sequence around the insert from the reference
                             upstream = ref_seq[start-7: start]
                             downstream = ref_seq[start: start + 7]
 
@@ -362,6 +382,14 @@ def join_insertion_and_deletions_dfs(insertions_df, deletions_df, prefix, wd):
         joined_df = insertions_df
     elif deletions_df.shape[0] >0:
         joined_df = deletions_df
+    else:
+        joined_df = pd.DataFrame()
+        joined_df['accession_id'] = ''
+        joined_df['indel'] = ''
+        joined_df['start_pos'] = ''
+        joined_df['length'] = ''
+        joined_df['upstream_ref'] = ''
+        joined_df['downstream_ref'] = ''
         
     outfile = os.path.join(wd, '%s_indels.csv' % prefix)
     joined_df.to_csv(outfile, index = False)
@@ -411,7 +439,7 @@ if __name__ == '__main__':
     print('')
     print('********************************')
     print('*** starting INDEL FINDER ***')
-    print('*** last updated 2021-09-02 ***')
+    print('*** last updated 2021-10-06 ***')
     print('')
     
     # parse command line arguments
