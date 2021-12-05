@@ -1,8 +1,12 @@
 # SARS-CoV-2 Indel Finder
 
+## update (2021-12-05)
+- indel_finder_aligner.py only identifies inserts and does not remove them, therefore the final sequence length will not be 29903 if there is an insertion present.
+- for the output- there are two columns for the start position. "ref_start_pos" refers to the location on the reference genome where the insertion is and "seq_start_pos" refers to the position on the sample sequnce where the insertion begins. These columns are also included for deletions; however only the "seq_start_pos" will be filled in because I haven't thought of a good way to get the ref_start_pos yet. It gets a bit sticky when there are insertions and deletions in the same sample sequence.
+
 ## update (2021-11-29)
 - the omicron variant has an known insertion right after bp 22204 in the reference path_to_ref_genome
-- ``indel_finder_omicron.py`` accounts for this insertion and does not remove it; however this means that the final output is no longer a MSA. If the 9 bp insertion at 22204 is found then the script does not remove it (a note 'ins not removed' is included in the indel.csv output) and the final length of the genome will be 29912 (not 29903). This means that sequences in the ".aligment.fasta" output could be 29912 or 29903 in length. Thus this is not a true MSA and cannot be used for tree building. 
+- ``indel_finder_omicron.py`` accounts for this insertion and does not remove it; however this means that the final output is no longer a MSA. If the 9 bp insertion at 22204 is found then the script does not remove it (a note 'ins not removed' is included in the indel.csv output) and the final length of the genome will be 29912 (not 29903). This means that sequences in the ".aligment.fasta" output could be 29912 or 29903 in length. Thus this is not a true MSA and cannot be used for tree building.
 - all inputs and outputs are the same for ``indel_finder_omicron.py``
 
 ## Purpose:
